@@ -37,13 +37,16 @@ services:
       dockerfile: ./infra/docker/nginx/Dockerfile
     ports:
       - target: 80
-        published: ${WEB_PUBLISHED_PORT:-80}
+        # published: ${WEB_PUBLISHED_PORT:-80}
+        published: 81
         protocol: tcp
         mode: host
     volumes:
       - type: bind
         source: ./src
         target: /data
+    environment:
+      - WEB_PUBLISHED_PORT=81
 
   db:
     build:
@@ -65,6 +68,8 @@ services:
       - MYSQL_USER=${DB_USERNAME:-phper}
       - MYSQL_PASSWORD=${DB_PASSWORD:-secret}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-secret}
+      - DB_PUBLISHED_PORT=3307
+
 
   mailhog:
     image: mailhog/mailhog
