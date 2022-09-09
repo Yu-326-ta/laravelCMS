@@ -12,4 +12,4 @@ docker compose.ymlファイルがあるディレクトリで以下のコマン�
 7.`docker compose exec app php artisan migrate:fresh --seed`コマンドでappコンテナに移動し、シーダーを実行。 　　
 8.APP_KEYが設定されてないので、srcディレクトリ下で`sudo php artisan key:generate`コマンドでキーを生成  
 
-srcディレクトリ下でphp artisan serveでアクセスするとLaravelの環境構築が出来ている。  
+srcディレクトリ下で`php artisan serve`でアクセスするとLaravelの環境構築が出来ている。  
