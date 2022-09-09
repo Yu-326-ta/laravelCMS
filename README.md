@@ -1,7 +1,8 @@
 # todo_list
 
 ## 環境構築方法
-Laravelの環境を構築したいディレクトリで`git clone`を行い、フォルダを作成する  
+Laravelの環境を構築したいディレクトリで`git clone`を行い、フォルダを作成する。  
+
 docker compose.ymlファイルがあるディレクトリで以下のコマンドを順に打つ  
 1. `docker compose build`コマンドでコンテナイメージの作成   
 2. `docker compose up -d`コマンドでバックグラウンドでコンテナを作成し起動    
