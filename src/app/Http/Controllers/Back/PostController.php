@@ -68,9 +68,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('back.posts.edit', compact('post'));
     }
 
     /**
@@ -80,9 +80,17 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, Post $post)
     {
-        //
+        if ($post->update($request->all())) {
+            $flash = ['success' => 'データを更新しました。'];
+        } else {
+            $flash = ['error' => 'データの更新に失敗しました'];
+        }
+     
+        return redirect()
+            ->route('back.posts.edit', $post)
+            ->with($flash);
     }
 
     /**
@@ -91,8 +99,16 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        if ($post->delete()) {
+            $flash = ['success' => 'データを削除しました。'];
+        } else {
+            $flash = ['error' => 'データの削除に失敗しました'];
+        }
+     
+        return redirect()
+            ->route('back.posts.index')
+            ->with($flash);
     }
 }
