@@ -46,4 +46,13 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+    
+        self::saving(function($post) {
+            $post->user_id = \Auth::id();
+        });
+    }
 }
