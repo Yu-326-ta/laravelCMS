@@ -41,4 +41,9 @@ class Post extends Model
     {
         return $this->published_at->format('Y年m月d日');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
