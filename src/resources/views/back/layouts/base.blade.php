@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ isset($title) ? $title . ' | ' : '' }}Laravel CMS</title>
+    <title>{{ isset($title) ? $title . ' | ' : '' }}管理画面</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" crossorigin="anonymous">
 </head>
 <body>
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('front.home') }}">
-                Laravel CMS
+            <a class="navbar-brand" href="{{ route('back.dashboard') }}">
+                管理画面
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
                 <span class="navbar-toggler-icon"></span>
@@ -19,11 +19,14 @@
  
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item{{ Request::is('/') ? ' active' : '' }}">
-                        <a class="nav-link" href="{{ route('front.home') }}">ホーム</a>
-                    </li>
-                    <li class="nav-item{{ Request::is('posts', 'posts/*') ? ' active' : '' }}">
-                        <a class="nav-link" href="{{ route('front.home') }}">お知らせ</a>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('back.dashboard') }}">ダッシュボード</a></li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" onClick="(function(){
+                            document.getElementById('logout-form').submit();
+                            return false;
+                        })();">ログアウト</a>
+                        {{ Form::open(['route' => 'logout', 'id' => 'logout-form']) }}
+                        {{ Form::close() }}
                     </li>
                 </ul>
             </div>
