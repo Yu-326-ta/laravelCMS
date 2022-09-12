@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Back;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tag;
+use App\Http\Requests\TagRequest;
 
 class TagController extends Controller
 {
@@ -35,9 +36,19 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
-        //
+        $tag = Tag::create($request->all());
+ 
+        if ($tag) {
+            return redirect()
+                ->route('back.tags.edit', $tag)
+                ->withSuccess('データを登録しました。');
+        } else {
+            return redirect()
+                ->route('back.tags.create')
+                ->withError('データの登録に失敗しました。');
+        }
     }
 
     /**
@@ -57,9 +68,9 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Tag $tag)
     {
-        //
+        return view('back.tags.edit', compact('tag'));
     }
 
     /**
@@ -69,9 +80,17 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TagRequest $request, Tag $tag)
     {
-        //
+        if ($tag->update($request->all())) {
+            $flash = ['success' => 'データを更新しました。'];
+        } else {
+            $flash = ['error' => 'データの更新に失敗しました'];
+        }
+     
+        return redirect()
+            ->route('back.tags.edit', $tag)
+            ->with($flash);
     }
 
     /**
@@ -80,8 +99,16 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
-        //
+        if ($tag->delete()) {
+            $flash = ['success' => 'データを削除しました。'];
+        } else {
+            $flash = ['error' => 'データの削除に失敗しました'];
+        }
+     
+        return redirect()
+            ->route('back.tags.index')
+            ->with($flash);
     }
 }
