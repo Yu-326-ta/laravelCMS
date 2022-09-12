@@ -55,4 +55,9 @@ class Post extends Model
             $post->user_id = \Auth::id();
         });
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }
