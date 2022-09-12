@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use App\Models\Tag;
 
 class PostController extends Controller
 {
@@ -13,10 +14,12 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($tagSlug = null)
     {
-        $posts = Post::publicList();
-        return view('front.posts.index', compact('posts'));
+        $posts = Post::publicList($tagSlug);
+        $tags = Tag::all();
+
+        return view('front.posts.index', compact('posts', 'tags'));
     }
 
     /**
