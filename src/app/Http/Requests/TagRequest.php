@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\AlphaNumDash;
+use Illuminate\Validation\Rule;
 
-class PostRequest extends FormRequest
+class TagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,22 +26,16 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:100',
-            'body' => 'max:1000',
-            'is_public' => 'required|numeric',
-            'published_at' => 'required|date_format:Y-m-d H:i',
-            'tags.*' => 'numeric|exists:tags,id'
+            'name' => 'required|max:50',
+            'slug' => ['required', 'max:50', new AlphaNumDash, Rule::unique('tags')->ignore($this->tag)]
         ];
     }
 
     public function attributes()
     {
         return [
-            'title' => 'タイトル',
-            'body' => '内容',
-            'is_public' => 'ステータス',
-            'published_at' => '公開日',
-            'tags.*' => 'タグ'
+            'name' => 'タグ名',
+            'slug' => 'スラッグ'
         ];
     }
 }

@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Post;
 use App\Models\Tag;
-use App\Http\Requests\PostRequest;
+use App\Http\Requests\TagRequest;
 
-class PostController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('user')->latest('id')->paginate(20);
-        return view('back.posts.index', compact('posts'));
+        $tags = Tag::latest('id')->paginate(20);
+        return view('back.tags.index', compact('tags'));
     }
 
     /**
@@ -28,8 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $tags = Tag::pluck('name', 'id')->toArray();
-        return view('back.posts.create', compact('tags'));
+        return view('back.tags.create');
     }
 
     /**
@@ -38,18 +36,17 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request)
+    public function store(TagRequest $request)
     {
-        $post = Post::create($request->all());
-        $post->tags()->attach($request->tags);
+        $tag = Tag::create($request->all());
  
-        if ($post) {
+        if ($tag) {
             return redirect()
-                ->route('back.posts.edit', $post)
+                ->route('back.tags.edit', $tag)
                 ->withSuccess('データを登録しました。');
         } else {
             return redirect()
-                ->route('back.posts.create')
+                ->route('back.tags.create')
                 ->withError('データの登録に失敗しました。');
         }
     }
@@ -71,10 +68,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(Tag $tag)
     {
-        $tags = Tag::pluck('name', 'id')->toArray();
-        return view('back.posts.edit', compact('post', 'tags'));
+        return view('back.tags.edit', compact('tag'));
     }
 
     /**
@@ -84,18 +80,16 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(TagRequest $request, Tag $tag)
     {
-        $post->tags()->sync($request->tags);
-
-        if ($post->update($request->all())) {
+        if ($tag->update($request->all())) {
             $flash = ['success' => 'データを更新しました。'];
         } else {
             $flash = ['error' => 'データの更新に失敗しました'];
         }
      
         return redirect()
-            ->route('back.posts.edit', $post)
+            ->route('back.tags.edit', $tag)
             ->with($flash);
     }
 
@@ -105,18 +99,16 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Tag $tag)
     {
-        $post->tags()->detach();
-
-        if ($post->delete()) {
+        if ($tag->delete()) {
             $flash = ['success' => 'データを削除しました。'];
         } else {
             $flash = ['error' => 'データの削除に失敗しました'];
         }
      
         return redirect()
-            ->route('back.posts.index')
+            ->route('back.tags.index')
             ->with($flash);
     }
 }
