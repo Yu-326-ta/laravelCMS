@@ -10,6 +10,14 @@ class Comment extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'comment', 'published_at'
+    ];
+ 
+    protected $casts = [
+        'published_at' => 'datetime'
+    ];
+
     public function post()
     {
         return $this->belongsTo(Post::class);

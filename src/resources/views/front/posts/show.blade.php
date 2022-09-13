@@ -18,3 +18,30 @@ $title = '投稿詳細';
     !!}
 </div>
 @endsection
+
+<?php
+/**
+ * @var Illuminate\Pagination\LengthAwarePaginator|\App\Models\Post[] $posts
+ */
+$title = 'コメント一覧';
+?>
+@section('comment')
+<div class="card-header">{{ $title }}</div>
+<div class="card-body">
+    @if($comments->count() <= 0)
+        <p>表示するコメントはありません。</p>
+    @else
+        <table class="table">
+            @foreach($comments as $comment)
+                <tr>
+                    <td>{{ $comment->published_at->format('Y年m月d日') }}</td>
+                    <td>{{ $comment->comment}}</td>
+                </tr>
+            @endforeach
+        </table>
+        <div class="d-flex justify-content-center">
+            {{ $comments->links() }}
+        </div>
+    @endif
+</div>
+@endsection
