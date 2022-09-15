@@ -28,7 +28,7 @@ $title = '投稿一覧';
                     <td>{{ $post->published_format }}</td>
                     <td>{{ $post->user->name }}</td>
                     <td class="d-flex justify-content-center">
-                        {{ link_to_route('front.posts.show', '詳細', $post, [
+                        {{ link_to_route('back.posts.show', '詳細', $post, [
                             'class' => 'btn btn-secondary btn-sm m-1',
                             'target' => '_blank'
                         ]) }}
