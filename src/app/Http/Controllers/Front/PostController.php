@@ -52,7 +52,7 @@ class PostController extends Controller
     public function show(int $id)
     {
         $post = Post::publicFindById($id);
-        $comments = Comment::where('post_id', $id)
+        $comments = Comment::wherePostId($id)
             ->orderBy('published_at', 'desc')
             ->paginate(10);
 
