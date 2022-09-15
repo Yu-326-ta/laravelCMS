@@ -6,6 +6,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Comment;
 
 class PostController extends Controller
 {
@@ -51,7 +52,11 @@ class PostController extends Controller
     public function show(int $id)
     {
         $post = Post::publicFindById($id);
-        return view('front.posts.show', compact('post'));
+        $comments = Comment::wherePostId($id)
+            ->orderBy('published_at', 'desc')
+            ->paginate(10);
+
+        return view('front.posts.show', compact('post', 'comments'));
     }
 
     /**
