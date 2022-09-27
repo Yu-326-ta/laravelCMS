@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Comment;
 use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
@@ -60,14 +61,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         $post = Post::publicFindById($id);
-        // $comments = Comment::wherePostId($id)
-        //     ->orderBy('published_at', 'desc')
-        //     ->paginate(10);
-
-        return view('back.posts.show', compact('post'));
+        $comments = Comment::wherePostId($id)
+            ->orderBy('published_at', 'desc')
+            ->paginate(10);
+            
+        return view('back.posts.show', compact('post', 'comments'));
     }
 
     /**

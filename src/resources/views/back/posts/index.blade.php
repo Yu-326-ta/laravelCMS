@@ -30,7 +30,6 @@ $title = '投稿一覧';
                     <td class="d-flex justify-content-center">
                         {{ link_to_route('back.posts.show', '詳細', $post, [
                             'class' => 'btn btn-secondary btn-sm m-1',
-                            'target' => '_blank'
                         ]) }}
                         {{ link_to_route('back.posts.edit', '編集', $post, [
                             'class' => 'btn btn-secondary btn-sm m-1'
