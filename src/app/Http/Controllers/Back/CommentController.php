@@ -27,7 +27,6 @@ class CommentController extends Controller
     public function create($id)
     {
         $post = Post::publicFindById($id);
-        // dd($id);
         return view('back.comments.create', compact('id', 'post'));
     }
 
