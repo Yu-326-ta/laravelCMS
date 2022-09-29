@@ -39,6 +39,6 @@
 <div class="form-group row">
     <div class="col-sm-10">
         <button type="submit" class="btn btn-primary">保存</button>
-        {{ link_to_route('back.posts.show', '一覧へ戻る', $post, ['class' => 'btn btn-secondary']) }}
+        {{ link_to_route('back.posts.show', '一覧へ戻る', $comment, ['class' => 'btn btn-secondary']) }}
     </div>
 </div>

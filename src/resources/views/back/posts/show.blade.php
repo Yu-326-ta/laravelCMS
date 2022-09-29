@@ -40,11 +40,11 @@ $title = '投稿詳細';
                     <td>{{ $comment->comment }}</td>
                     <td>{{ $comment->published_at->format('Y年m月d日') }}</td>
                     <td class="d-flex justify-content-center">
-                        {{ link_to_route('back.posts.edit', '編集', $comment, [
+                        {{ link_to_route('back.comments.edit', '編集', ['id' => $post->id, 'comment' => $comment->id], [
                             'class' => 'btn btn-secondary btn-sm m-1'
                         ]) }}
                         {{ Form::model($comment, [
-                            'route' => ['back.posts.destroy', $comment],
+                            'route' => ['back.comments.destroy', ['id' => $post->id, 'comment' => $comment->id]],
                             'method' => 'delete'
                         ]) }}
                             {{ Form::submit('削除', [

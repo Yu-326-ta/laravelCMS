@@ -68,9 +68,10 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id, int $commentId)
     {
-        //
+        $comment = Comment::findOrFail($commentId);
+        return view('back.comments.edit', compact('comment', 'id', 'commentId'));
     }
 
     /**
@@ -80,9 +81,19 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id, int $commentId)
     {
-        //
+        $comment = Comment::findOrFail($commentId);
+
+        if ($comment->update($request->all())) {
+            $flash = ['success' => 'コメントを更新しました。'];
+        } else {
+            $flash = ['error' => 'コメントの更新に失敗しました'];
+        }
+
+        return redirect()
+        ->route('back.comments.edit', ['id' => $id, 'comment' => $commentId])
+        ->with($flash);
     }
 
     /**
@@ -91,8 +102,17 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id, int $commentId)
     {
-        //
+        $comment = Comment::findOrFail($commentId);
+        if ($comment->delete()) {
+            $flash = ['success' => 'コメントを削除しました。'];
+        } else {
+            $flash = ['error' => 'コメントの削除に失敗しました'];
+        }
+     
+        return redirect()
+            ->route('back.posts.show', $id)
+            ->with($flash);
     }
 }
