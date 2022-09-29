@@ -44,6 +44,18 @@
             </div>
         </div>
     </main>
+    <main class="py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <x-back.alert />
+                    <div class="card">
+                        @yield('comment')
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
