@@ -81,16 +81,18 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $comment)
+    public function update(Request $request, int $id, int $comment)
     {
-        if ($comment->update($request->all())) {
+        $com = Comment::findOrFail($comment);
+
+        if ($com->update($request->all())) {
             $flash = ['success' => 'コメントを更新しました。'];
         } else {
             $flash = ['error' => 'コメントの更新に失敗しました'];
         }
 
         return redirect()
-        ->route('back.comments.edit', $comment)
+        ->route('back.comments.edit', ['id' => $id, 'comment' => $comment])
         ->with($flash);
     }
 
